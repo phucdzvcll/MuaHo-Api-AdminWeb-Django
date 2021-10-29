@@ -142,6 +142,7 @@ class MerchantBuyerFavorite(models.Model):
 class MerchantCategory(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.TextField()
+    thumbUrl = models.TextField()
 
     def __str__(self):
         return f"{self.id} - {self.name}"

@@ -1,0 +1,4 @@
+api/__pycache__/
+api/controllers/__pycache__/
+muaho_site/__pycache__/
+api/migrations/__pycache__/
