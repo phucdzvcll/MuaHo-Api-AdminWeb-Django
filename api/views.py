@@ -1,5 +1,7 @@
-from django.http import HttpResponse
+from api.controllers.home_controller import get_categories
+from django.http import HttpRequest, HttpResponse
+from api.util import responseJson
+from api.controllers import *
 
-
-def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+def categories(request: HttpRequest) -> HttpResponse:
+    return responseJson(get_categories())
