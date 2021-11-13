@@ -1,11 +1,12 @@
 from typing import List
 
 class Banner():
-    def __init__(self, id: int, subject: str, description: str, thumb_url: str):
+    def __init__(self, id: int, subject: str, description: str, thumb_url: str, deeplink: str):
         self.id = id
         self.subject = subject
         self.description = description
-        self.thumb_url = thumb_url
+        self.thumbUrl = thumb_url
+        self.deeplink = deeplink
 
 class Voucher():
     def __init__(self, id: int, code: str, description: str, value: float, type: str, min_order_total: float, is_apply_for_all_shop: bool, shops: List[int]):  

@@ -2,9 +2,12 @@ from django.db import models
 
 class AdBanner(models.Model):
     id = models.AutoField(primary_key=True)
+    subject = models.TextField()
+    description = models.TextField()
     deeplink_destination = models.TextField()
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
+    thumbUrl = models.ImageField(upload_to='banner')
 
     def __str__(self):
         return f"{self.id}"

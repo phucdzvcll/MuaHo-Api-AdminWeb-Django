@@ -6,6 +6,7 @@ from . import views
 
 urlpatterns = [
     path('categories', views.categories, name='categories'),
+    path('banners', views.banners, name='banners'),
 ] 
 
 if settings.DEBUG:
