@@ -111,11 +111,12 @@ class OrderDeliveryInfo():
 
 class HotShop():
 
-    def __init__(self, id: int, name: str, address: str, thumb_url: str):  
+    def __init__(self, id: int, name: str, address: str, thumb_url: str, star: float):  
         self.id = id
         self.name = name
         self.address = address
-        self.thumb_url = thumb_url
+        self.thumbUrl = thumb_url
+        self.star = star
 
 class HotSearchKeyword():
 
