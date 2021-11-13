@@ -1,6 +1,7 @@
-from api.network_models import HotSearch, HotSearchKeyword, HotShop, ShopSearch
+from api.network_models import HotSearch, HotSearchKeyword, HotShop, ProductInGroup, ShopSearch, ShopProducts
+from api.network_models import ProductGroup as ProductGroupNw
 from django.db.models.query import QuerySet
-from api.models import Merchant, Product
+from api.models import Merchant, Product, ProductGroup
 from django.db.models import Q
 from typing import List
 
@@ -26,5 +27,17 @@ def search_shop(keyword: str) -> List[ShopSearch]:
 def mapSearchMerchant(merchant: Merchant) -> ShopSearch:
     return ShopSearch(id=merchant.id, name=merchant.name, thumb_url=merchant.thumbUrl.url, address=merchant.address, star=merchant.rating_score_avg)
 
-# def shop_product(shopID : int) -> List[Product]:
-    
+def shop_product(shopID : int) -> ShopProducts:
+    merchant : Merchant = Merchant.objects.get(id = shopID)
+    dbProductGroup : QuerySet[ProductGroup] = merchant.productgroup_set.all()
+    list_product_group : List[ProductGroupNw] = list(map(mapProductGroup, dbProductGroup))
+    return ShopProducts(shopId=merchant.id, shopName= merchant.name, shopAddress=merchant.address, groups=list_product_group, vouchers=[]) 
+
+def mapProductGroup(productGroup : ProductGroup) -> ProductGroupNw:
+    productDb : QuerySet[Product] = Product.objects.filter(group_id = productGroup.id)
+    list_products : List[ProductInGroup] = list(map(mapProductInGroup2222, productDb))
+    return ProductGroupNw(groupId=productGroup.id, groupName=productGroup.name, products = list_products)
+
+def mapProductInGroup2222(product : Product) -> ProductInGroup:
+    return ProductInGroup(productId = product.id, productName=product.name, productPrice=product.price, unit=product.unit_name, thumbUrl=product.thumbUrl.url)
+
