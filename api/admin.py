@@ -43,8 +43,6 @@ admin.site.register(MerchantBuyerFavorite)
 
 admin.site.register(MerchantCategory)
 
-admin.site.register(MerchantVoucher)
-
 admin.site.register(Order)
 
 admin.site.register(OrderProduct)
@@ -64,4 +62,11 @@ class ProductGroupAdmin(admin.ModelAdmin):
 
 admin.site.register(ProductGroup, ProductGroupAdmin)
 
-admin.site.register(Voucher)
+class MerchantVoucherInline(admin.StackedInline):
+    model = MerchantVoucher
+
+class VoucherAdmin(admin.ModelAdmin):
+    inlines = [MerchantVoucherInline]
+    model = Voucher
+
+admin.site.register(Voucher, VoucherAdmin)
