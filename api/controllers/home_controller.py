@@ -9,7 +9,7 @@ def get_banners():
     return list_banner
 
 def mapMerchantCategory(merchantCategory: MerchantCategory) -> Category:
-    return Category(id=merchantCategory.id, name=merchantCategory.name, thumb_url=merchantCategory.thumbUrl)
+    return Category(id=merchantCategory.id, name=merchantCategory.name, thumb_url=merchantCategory.thumbUrl.url)
 
 def get_categories() -> List[Category]:
     dbModels: QuerySet[MerchantCategory] = MerchantCategory.objects.all()
