@@ -1,11 +1,22 @@
 from django.db.models.query import QuerySet
-from api.models import MerchantCategory
+from api.models import AdBanner, MerchantCategory
 from api.network_models import Banner, Category
 from typing import List
+import datetime
+
+def mapBanner(adBanner: AdBanner) -> Banner:
+    return Banner(
+        id= adBanner.id, 
+        subject= adBanner.subject, 
+        description= adBanner.description, 
+        thumb_url= adBanner.thumbUrl.url,
+        deeplink= adBanner.deeplink_destination
+    )
 
 def get_banners():
-    list_banner: List[Banner] = []
-
+    now: datetime = datetime.datetime.now()
+    dbModels: QuerySet[AdBanner] = AdBanner.objects.filter(end_date__gte=now, start_date__lte=now)
+    list_banner: List[Banner] = list(map(mapBanner, dbModels))
     return list_banner
 
 def mapMerchantCategory(merchantCategory: MerchantCategory) -> Category:
