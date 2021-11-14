@@ -9,13 +9,14 @@ def mapMerchantCategory(voucherDb: VoucherDb) -> VoucherNetwork:
     voucherType : str = "percent"
     if voucherDb.voucher_type == VoucherDb.DISCOUNT:
         voucherType = "discount"
-    merchantVouchers = voucherDb.merchantvoucher_set.values('id')
+    #merchantVouchers = voucherDb.merchantvoucher_set.values('id')
+    merchantVouchers = voucherDb.merchantvoucher_set.all()
     return VoucherNetwork(
         code= voucherDb.code,
         description= voucherDb.description,
         id= voucherDb.id,
         is_apply_for_all_shop= voucherDb.isApplyAllMerchant,
-        shops= list(map(lambda merchant: merchant["id"] , merchantVouchers)),
+        shops= list(map(lambda merchant: merchant.id , merchantVouchers)),
         type= voucherType,
         value= voucherDb.value,
         min_order_total= voucherDb.min_order_total,
@@ -24,7 +25,7 @@ def mapMerchantCategory(voucherDb: VoucherDb) -> VoucherNetwork:
     
 def get_list_voucher(userId: int) -> List[VoucherNetwork]:
     now: datetime = datetime.datetime.now()
-    voucherModels: QuerySet[VoucherDb] = VoucherDb.objects.filter(last_date__gte=now, start_date__lte=now)#.prefetch_related("merchantvoucher_set")
+    voucherModels: QuerySet[VoucherDb] = VoucherDb.objects.filter(last_date__gte=now, start_date__lte=now).prefetch_related("merchantvoucher_set")
     voucherInWalletModels: QuerySet[VoucherDb] = BuyerVoucher.objects.filter(buyer__id=userId).values('voucher_id')
 
     voucherInWalletIds: List[int] = list(map(lambda voucher: voucher["voucher_id"], voucherInWalletModels))
