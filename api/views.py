@@ -1,4 +1,5 @@
 from api.controllers.home_controller import get_categories
+from api.controllers.order_history_controller import get_complete_order_history, get_delevering_order_history
 from api.controllers.search_controller import get_hot_shop
 from api.controllers.search_controller import search_shop
 from api.controllers.search_controller import shop_product
@@ -36,3 +37,10 @@ def searchShop(request: HttpRequest) -> HttpResponse:
 
 def products(request: HttpRequest, shopID : int) -> HttpResponse:
     return responseJson(shop_product(shopID))
+
+
+def getOrderHistoryDelivering(request: HttpRequest) -> HttpResponse:
+    return responseJson(get_delevering_order_history(userId=1))
+
+def getOrderHistoryComplete(request: HttpRequest) -> HttpResponse:
+    return responseJson(get_complete_order_history(userId=1))
