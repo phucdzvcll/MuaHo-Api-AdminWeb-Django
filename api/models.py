@@ -2,9 +2,12 @@ from django.db import models
 
 class AdBanner(models.Model):
     id = models.AutoField(primary_key=True)
+    subject = models.TextField()
+    description = models.TextField()
     deeplink_destination = models.TextField()
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
+    thumbUrl = models.ImageField(upload_to='banner')
 
     def __str__(self):
         return f"{self.id}"
@@ -26,10 +29,9 @@ class Buyer(models.Model):
         managed = True
         db_table = 'Buyer'
 
-
 class BuyerAddress(models.Model):
     id = models.AutoField(primary_key=True)
-    buyer = models.ForeignKey(Buyer, models.DO_NOTHING, db_column='buyerId', db_constraint=False)
+    buyer = models.ForeignKey(Buyer, models.DO_NOTHING, db_constraint=False)
     address = models.TextField()
     contact_phone_number = models.TextField()
     create_date = models.DateTimeField()
@@ -109,7 +111,7 @@ class DriverOrderRating(models.Model):
 
 class Merchant(models.Model):
     id = models.AutoField(primary_key=True)
-    name = models.TextField(blank=True, null=True)
+    name = models.TextField()
     address = models.TextField(blank=True, null=True)
     location_lat = models.FloatField()
     location_lng = models.FloatField()
@@ -164,14 +166,13 @@ class MerchantVoucher(models.Model):
         managed = True
         db_table = 'MerchantVoucher'
 
-
 class Order(models.Model):
     id = models.AutoField(primary_key=True)
-    code = models.TextField(blank=True, null=True)
-    merchantid = models.ForeignKey(Merchant, models.DO_NOTHING, db_column='merchantId', db_constraint=False)
+    code = models.TextField()
+    merchant = models.ForeignKey(Merchant, models.DO_NOTHING, db_column='merchantId', db_constraint=False)
     buyer = models.ForeignKey(Buyer, models.DO_NOTHING, db_column='buyerId', db_constraint=False)
     delivery_address = models.ForeignKey(BuyerAddress, models.DO_NOTHING, db_constraint=False)
-    delivery_address_text = models.TextField(db_column='delivery_address', blank=True, null=True)
+    delivery_address_text = models.TextField(blank=True, null=True)
     delivery_phone_number = models.TextField(blank=True, null=True)
     voucher = models.ForeignKey('Voucher', models.DO_NOTHING, blank=True, null=True, db_constraint=False)
     total_amount = models.FloatField()
@@ -235,15 +236,31 @@ class ProductGroup(models.Model):
 
 
 class Voucher(models.Model):
+    # Constants voucher type
+    PERCENT = 'pc'
+    DISCOUNT = 'dc'
+    TYPE_CHOICES = (
+        (PERCENT, 'Discount percent'),
+        (DISCOUNT, 'Discount amount'),
+    )
+
     id = models.AutoField(primary_key=True)
-    name = models.TextField(blank=True, null=True)
-    type = models.IntegerField(blank=True, null=True)
+    code = models.TextField()
+    description = models.TextField(blank=True)
+    voucher_type = models.CharField(
+        max_length=2,
+        choices=TYPE_CHOICES,
+        default=PERCENT,
+    )
     value = models.FloatField()
-    isApplyAllMerchant = models.BooleanField(db_column='isApplyAllMerchant')
-    isApplyAllBuyer = models.BooleanField(db_column='isApplyAllBuyer')
+    isApplyAllMerchant = models.BooleanField()
+    isApplyAllBuyer = models.BooleanField()
+    start_date = models.DateTimeField()
+    last_date = models.DateTimeField()
+    min_order_total = models.FloatField()
 
     def __str__(self):
-        return f"{self.id} - {self.name}"
+        return f"{self.id} - {self.code}"
 
     class Meta:
         managed = True
