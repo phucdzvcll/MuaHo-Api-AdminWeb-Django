@@ -3,7 +3,7 @@ import json
 from datetime import date, datetime
 
 def obj_to_dict(obj):
-
+    print('obj_to_dict',obj)
     if isinstance(obj, (datetime)):
         return '{:%Y-%m-%d %H:%M:%S}'.format(obj)
     if isinstance(obj, (date)):

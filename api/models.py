@@ -116,6 +116,7 @@ class Merchant(models.Model):
     location_lat = models.FloatField()
     location_lng = models.FloatField()
     category = models.ForeignKey('MerchantCategory', models.DO_NOTHING, db_constraint=False)
+    thumbUrl = models.ImageField(upload_to='merchant', default='')
     rating_score_avg = models.FloatField()
 
     def __str__(self):
@@ -212,7 +213,7 @@ class Product(models.Model):
     price = models.FloatField()
     unit_name = models.TextField(blank=True)
     group = models.ForeignKey('ProductGroup', models.DO_NOTHING, db_constraint=False)
-    merchant = models.ForeignKey(Merchant, models.DO_NOTHING, db_constraint=False)
+    thumbUrl = models.ImageField(upload_to = 'product', default='')
 
     def __str__(self):
         return f"{self.id} - {self.name}"

@@ -39,25 +39,25 @@ class ShopSearch():
 
 class ProductInGroup():
 
-    def __init__(self, product_id: int, product_name: str, produt_price: float, unit: str, thumb_url: str):  
-        self.product_id = product_id
-        self.product_name = product_name
-        self.produt_price = produt_price
+    def __init__(self, productId: int, productName: str, productPrice: float, unit: str, thumbUrl: str):  
+        self.productId = productId
+        self.productName = productName
+        self.produtPrice = productPrice
         self.unit = unit
-        self.thumb_url = thumb_url
+        self.thumbUrl = thumbUrl
 
 class ProductGroup():
-    def __init__(self, group_id: int, group_name: str, products: List[ProductInGroup]):  
-        self.group_id = group_id
-        self.group_name = group_name
+    def __init__(self, groupId: int, groupName: str, products: List[ProductInGroup]):  
+        self.groupId = groupId
+        self.groupName = groupName
         self.products = products
 
 class ShopProducts():
 
-    def __init__(self, shop_id: int, shop_name: str, shop_address: str, groups: List[ProductGroup], vouchers: List[ShopVoucher]):  
-        self.shop_id = shop_id
-        self.shop_name = shop_name
-        self.shop_address = shop_address
+    def __init__(self, shopId: int, shopName: str, shopAddress: str, groups: List[ProductGroup], vouchers: List[ShopVoucher]):  
+        self.shopId = shopId
+        self.shopName = shopName
+        self.shopAddress = shopAddress
         self.groups = groups
         self.vouchers = vouchers
 
@@ -114,11 +114,12 @@ class OrderDeliveryInfo():
 
 class HotShop():
 
-    def __init__(self, id: int, name: str, address: str, thumb_url: str):  
+    def __init__(self, id: int, name: str, address: str, thumb_url: str, star: float):  
         self.id = id
         self.name = name
         self.address = address
-        self.thumb_url = thumb_url
+        self.thumbUrl = thumb_url
+        self.star = star
 
 class HotSearchKeyword():
 
