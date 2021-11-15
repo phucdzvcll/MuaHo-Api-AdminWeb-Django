@@ -116,7 +116,7 @@ class Merchant(models.Model):
     location_lat = models.FloatField()
     location_lng = models.FloatField()
     category = models.ForeignKey('MerchantCategory', models.DO_NOTHING, db_constraint=False)
-    thumbUrl = models.ImageField(upload_to='merchant', default='')
+    thumbUrl = models.ImageField(upload_to='merchant', default='', blank=True)
     rating_score_avg = models.FloatField()
 
     def __str__(self):
@@ -145,7 +145,7 @@ class MerchantBuyerFavorite(models.Model):
 class MerchantCategory(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.TextField()
-    thumbUrl = models.ImageField(upload_to='category')
+    thumbUrl = models.ImageField(upload_to='category', blank=True)
 
     def __str__(self):
         return f"{self.id} - {self.name}"
@@ -168,6 +168,22 @@ class MerchantVoucher(models.Model):
         db_table = 'MerchantVoucher'
 
 class Order(models.Model):
+        # Accepted, Packing, Delivering, Success, Fail, Cancel
+    ACCEPTED = "ac"
+    PACKING = "pk"
+    DELIVERING = "dv"
+    SUCCESS = "ss"
+    FAIL = "fl"
+    CANCEL = "cn"
+    STATUSES = (
+        (ACCEPTED, "Accepted"),
+        (PACKING, "Packing"),
+        (DELIVERING, "Delivering"),
+        (SUCCESS, "Success"),
+        (FAIL, "Fail"),
+        (CANCEL, "Cancel"),
+    )
+
     id = models.AutoField(primary_key=True)
     code = models.TextField()
     merchant = models.ForeignKey(Merchant, models.DO_NOTHING, db_column='merchantId', db_constraint=False)
@@ -178,7 +194,16 @@ class Order(models.Model):
     voucher = models.ForeignKey('Voucher', models.DO_NOTHING, blank=True, null=True, db_constraint=False)
     total_amount = models.FloatField()
     driver = models.ForeignKey(Driver, models.DO_NOTHING, blank=True, null=True, db_constraint=False)
-    status = models.IntegerField()
+    order_status = models.CharField(
+        max_length=2,
+        choices=STATUSES,
+    )
+    voucher_code = models.IntegerField()
+    total_before_discount = models.FloatField()
+    voucher_discount = models.FloatField()
+    shop_name = models.TextField()
+    shop_address = models.TextField()
+    item_count = models.IntegerField(default=0)
     order_date = models.DateTimeField()
     last_update_date = models.DateTimeField()
 
@@ -213,7 +238,8 @@ class Product(models.Model):
     price = models.FloatField()
     unit_name = models.TextField(blank=True)
     group = models.ForeignKey('ProductGroup', models.DO_NOTHING, db_constraint=False)
-    thumbUrl = models.ImageField(upload_to = 'product', default='')
+    total = models.FloatField()
+    thumbUrl = models.ImageField(upload_to = 'product', default='', blank=True)
 
     def __str__(self):
         return f"{self.id} - {self.name}"

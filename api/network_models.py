@@ -72,10 +72,11 @@ class RateOrderRequest():
 
 class OrderHistory():
 
-    def __init__(self, order_id: int, shop_name: str, item_count: int, total: float, status: str):  
-        self.order_id = order_id
-        self.shop_name = shop_name
-        self.item_count = item_count
+    def __init__(self, order_id: int, shop_name: str, order_code: str, item_count: int, total: float, status: str):  
+        self.orderId = order_id
+        self.orderCode = order_code
+        self.shopName = shop_name
+        self.itemCount = item_count
         self.total = total
         self.status = status
 
