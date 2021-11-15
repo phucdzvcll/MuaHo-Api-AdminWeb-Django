@@ -6,6 +6,7 @@ from api.controllers.search_controller import shop_product
 from api.controllers.home_controller import get_banners, get_categories
 from django.http import HttpRequest, HttpResponse
 from api.controllers.voucher_controller import get_list_voucher
+from api.network_models import ShopProducts
 from api.util import responseJson
 from api.controllers import *
 from django.http import Http404
@@ -36,7 +37,14 @@ def searchShop(request: HttpRequest) -> HttpResponse:
     return responseJson(search_shop(queryParam))
 
 def products(request: HttpRequest, shopID : int) -> HttpResponse:
-    return responseJson(shop_product(shopID))
+    if request.method == "GET":
+        shop_product_result : ShopProducts = shop_product(shopID)
+        if shop_product_result is None:
+            raise Http404("Does not exist")
+        else:
+            return responseJson(shop_product_result)
+    else:    
+        raise Http404("Does not exist") 
 
 def getOrderHistoryDelivering(request: HttpRequest) -> HttpResponse:
     return responseJson(get_delevering_order_history(userId=1))

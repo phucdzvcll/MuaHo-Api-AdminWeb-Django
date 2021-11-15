@@ -221,6 +221,7 @@ class OrderProduct(models.Model):
     product = models.ForeignKey('Product', models.DO_NOTHING, db_constraint=False)
     price = models.FloatField()
     quantity = models.IntegerField()
+    total = models.FloatField()
     create_date = models.DateTimeField()
 
     def __str__(self):
@@ -238,7 +239,6 @@ class Product(models.Model):
     price = models.FloatField()
     unit_name = models.TextField(blank=True)
     group = models.ForeignKey('ProductGroup', models.DO_NOTHING, db_constraint=False)
-    total = models.FloatField()
     thumbUrl = models.ImageField(upload_to = 'product', default='', blank=True)
 
     def __str__(self):
