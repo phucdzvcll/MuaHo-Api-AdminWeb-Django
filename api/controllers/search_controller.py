@@ -40,7 +40,7 @@ def shop_product(shopID : int) -> ShopProducts:
         voucherInWalletIds: List[int] = list(map(lambda voucher: voucher["voucher_id"], voucherInWalletModels))
         dbModels: List[Voucher] = []
         for voucher in voucherModels:
-            if voucher.id in voucherInWalletIds or voucher.isApplyAllBuyer == True:
+            if voucher.id in voucherInWalletIds or voucher.isApplyAllMerchant == True:
                 dbModels += [voucher]
         list_voucher : List[ShopVoucher] = list(map(mapMerchantVoucher, dbModels))
 

@@ -142,23 +142,25 @@ class CreateOrderRespone():
 class CreateOrderProduct():
 
     def __init__(self, product_id: int, price: float, quantity: int, total: float):  
-        self.product_id = product_id
+        self.productId = product_id
         self.price = price
         self.quantity = quantity
         self.total = total
 
+    def __str__(self) -> str:
+        return str(vars(self))
+
 class CreateOrderRequest():
 
-    def __init__(self, products: List[CreateOrderProduct], voucher_id: int, total_before_discount: float, voucher_discount: float, total: float, user_id: int, delivery_address: str, delivery_phone_number: str, shop_id: int):  
+    def __init__(self, products: List[CreateOrderProduct], voucher_id: int, total_before_discount: float, voucher_discount: float, total: float, user_id: int, shop_id: int, deliveryAddressID: int):  
         self.products = products
-        self.voucher_id = voucher_id
-        self.total_before_discount = total_before_discount
-        self.voucher_discount = voucher_discount
+        self.voucherId = voucher_id
+        self.totalBeforeDiscount = total_before_discount
+        self.voucherDiscount = voucher_discount
         self.total = total
-        self.user_id = user_id
-        self.delivery_address = delivery_address
-        self.delivery_phone_number = delivery_phone_number
-        self.shop_id = shop_id
+        self.userId = user_id
+        self.deliveryAddressID = deliveryAddressID
+        self.shopId = shop_id
 
 
 

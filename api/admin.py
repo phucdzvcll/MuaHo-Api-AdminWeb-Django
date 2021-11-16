@@ -105,7 +105,15 @@ class MerchantCategoryAdmin(admin.ModelAdmin):
 
 admin.site.register(MerchantCategory, MerchantCategoryAdmin)
 
-admin.site.register(Order)
+class OrderProductInline(admin.StackedInline):
+    model = OrderProduct
+    extra = 0
+
+class OrderAdmin(admin.ModelAdmin):
+    model = Order
+    inlines = [OrderProductInline]
+
+admin.site.register(Order, OrderAdmin)
 
 admin.site.register(OrderProduct)
 

@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import tree
 
 class AdBanner(models.Model):
     id = models.AutoField(primary_key=True)
@@ -198,7 +199,7 @@ class Order(models.Model):
         max_length=2,
         choices=STATUSES,
     )
-    voucher_code = models.IntegerField()
+    voucher_code = models.TextField(blank= True, null= True)
     total_before_discount = models.FloatField()
     voucher_discount = models.FloatField()
     shop_name = models.TextField()
@@ -222,6 +223,7 @@ class OrderProduct(models.Model):
     price = models.FloatField()
     quantity = models.IntegerField()
     total = models.FloatField()
+    product_name = models.TextField(default= '', blank= True)
     create_date = models.DateTimeField()
 
     def __str__(self):
