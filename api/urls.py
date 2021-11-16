@@ -10,8 +10,8 @@ from api.api_views.voucher.voucher import VoucherApiView
 from . import views
 
 urlpatterns = [
-    path('categories', BannerApiView.as_view(), name='categories'),
-    path('banners', CategoryApiView.as_view(), name='banners'),
+    path('categories', CategoryApiView.as_view(), name='categories'),
+    path('banners', BannerApiView.as_view(), name='banners'),
     path('voucher/list', VoucherApiView.as_view(), name='getListVoucher'),
     path('getHotSearch', views.getHotSearch, name='getHotSearch'),
     path('searchShop', views.searchShop, name='searchShop'),
