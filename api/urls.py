@@ -12,5 +12,6 @@ urlpatterns = [
     path('order/history/delivering', views.getOrderHistoryDelivering, name='getOrderHistoryDelivering'),
     path('order/history/complete', views.getOrderHistoryComplete, name='getOrderHistoryComplete'),
     path('order/createOrder', views.createOrder, name= 'createOrder'),
-    path("rateOrder", views.rateOrder, name="rateOrder")
+    path("rateOrder", views.rateOrder, name="rateOrder"),
+    path('order/<int:orderId>/deliveryInfo', views.deliveryInfo, name='deliveryInfo'),
 ] 
