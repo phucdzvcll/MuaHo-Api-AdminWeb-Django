@@ -1,7 +1,7 @@
 from functools import cached_property
 from api.network_models import CreateOrderRequest, CreateOrderRespone, OrderDeliveryInfo, RateOrderRequest
 import datetime
-from api.models import Buyer, BuyerAddress, Driver, Merchant, Order, OrderProduct, Product, Voucher
+from api.models import Buyer, BuyerAddress, Driver, DriverOrderRating, Merchant, Order, OrderProduct, Product, Voucher
 
 def create_order(createOrderRequest: CreateOrderRequest) -> CreateOrderRespone:
     now: datetime = datetime.datetime.now()
@@ -61,5 +61,22 @@ def get_order_delivery_info(order_id: int) -> OrderDeliveryInfo:
     return 'do some magic!'
 
 
-def rate_order(rateOrderRequest: RateOrderRequest):
-    pass
+def rate_order(rateOrderResquest: RateOrderRequest) -> int:
+    order : Order
+    try:
+        order = Order.objects.get(id = rateOrderResquest.orderId)
+        if order.order_status != Order.SUCCESS and order.order_status != Order.FAIL:
+            return 404
+        else:
+            now: datetime = datetime.datetime.now()
+            orderDriverRating : DriverOrderRating = DriverOrderRating(
+                order = order,
+                driver = order.driver,
+                driver_rating_score = rateOrderResquest.driverScore,
+                order_rating_score = rateOrderResquest.orderScore,
+                create_date = now
+            )
+            orderDriverRating.save()
+            return 200
+    except:
+        return 404

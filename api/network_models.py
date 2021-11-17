@@ -64,9 +64,9 @@ class ShopProducts():
 class RateOrderRequest():
 
     def __init__(self, order_id: int, driver_score: int, order_score: int):  
-        self.order_id = order_id
-        self.driver_score = driver_score
-        self.order_score = order_score
+        self.orderId = order_id
+        self.driverScore = driver_score
+        self.orderScore = order_score
 
 
 
