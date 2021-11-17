@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import tree
 
 class AdBanner(models.Model):
     id = models.AutoField(primary_key=True)
@@ -145,7 +146,7 @@ class MerchantBuyerFavorite(models.Model):
 class MerchantCategory(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.TextField()
-    thumbUrl = models.ImageField(upload_to='category')
+    thumbUrl = models.ImageField(upload_to='category', blank=True)
 
     def __str__(self):
         return f"{self.id} - {self.name}"
@@ -168,7 +169,8 @@ class MerchantVoucher(models.Model):
         db_table = 'MerchantVoucher'
 
 class Order(models.Model):
-    # Accepted, Packing, Delivering, Success, Fail, Cancel
+  
+# Accepted, Packing, Delivering, Success, Fail, Cancel
     ACCEPTED = "ac"
     PACKING = "pk"
     DELIVERING = "dv"
@@ -198,6 +200,12 @@ class Order(models.Model):
         max_length=2,
         choices=STATUSES,
     )
+
+    voucher_code = models.TextField(blank= True, null= True)
+    total_before_discount = models.FloatField()
+    voucher_discount = models.FloatField()
+    shop_name = models.TextField()
+    shop_address = models.TextField()
     item_count = models.IntegerField(default=0)
     order_date = models.DateTimeField()
     last_update_date = models.DateTimeField()
@@ -216,6 +224,8 @@ class OrderProduct(models.Model):
     product = models.ForeignKey('Product', models.DO_NOTHING, db_constraint=False)
     price = models.FloatField()
     quantity = models.IntegerField()
+    total = models.FloatField()
+    product_name = models.TextField(default= '', blank= True)
     create_date = models.DateTimeField()
 
     def __str__(self):
@@ -233,7 +243,7 @@ class Product(models.Model):
     price = models.FloatField()
     unit_name = models.TextField(blank=True)
     group = models.ForeignKey('ProductGroup', models.DO_NOTHING, db_constraint=False)
-    thumbUrl = models.ImageField(upload_to = 'product', default='')
+    thumbUrl = models.ImageField(upload_to = 'product', default='', blank=True)
 
     def __str__(self):
         return f"{self.id} - {self.name}"

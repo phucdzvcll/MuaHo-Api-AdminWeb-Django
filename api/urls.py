@@ -16,7 +16,13 @@ urlpatterns = [
     path('getHotSearch', views.getHotSearch, name='getHotSearch'),
     path('searchShop', views.searchShop, name='searchShop'),
     path('shop/<int:shopID>/products', views.products, name='productShop'),
+    path('order/history/delivering', views.getOrderHistoryDelivering, name='getOrderHistoryDelivering'),
+    path('order/history/complete', views.getOrderHistoryComplete, name='getOrderHistoryComplete'),
+    path('order/createOrder', views.createOrder, name= 'createOrder'),
+    path("rateOrder", views.rateOrder, name="rateOrder"),
+    path('order/<int:orderId>/deliveryInfo', views.deliveryInfo, name='deliveryInfo'),
     path('order/history/delivering', DeleveringOrderHistoryApiView.as_view(), name='getOrderHistoryDelivering'),
     path('order/history/complete', CompleteOrderHistoryApiView.as_view(), name='getOrderHistoryComplete'),
     path('order/<int:orderId>', OrderDetailApiView.as_view(), name='getOrderDetail'),
 ]
+
