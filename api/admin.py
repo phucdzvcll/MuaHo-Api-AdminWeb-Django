@@ -2,6 +2,7 @@
 from django.contrib import admin
 from django import forms
 from django.db import models
+from django.forms import widgets
 from django.utils.html import format_html
 
 # Local Libs:
@@ -49,7 +50,19 @@ class MerchantAdmin(admin.ModelAdmin):
     
 admin.site.register(AdBanner)
 
-admin.site.register(Buyer)
+class BuyerForm(forms.ModelForm):
+    class Meta:
+        model = Buyer
+        widgets = {
+                'name': forms.TextInput(attrs={'size': "50"}),
+                'phone_number': forms.TextInput(attrs={'size': "50"}),
+            }
+        fields = '__all__'
+
+class BuyerAdmin(admin.ModelAdmin):
+    form = BuyerForm
+
+admin.site.register(Buyer, BuyerAdmin)
 
 admin.site.register(BuyerAddress)
 
@@ -58,7 +71,21 @@ admin.site.register(BuyerLoginInfo,)
 
 admin.site.register(BuyerVoucher)
 
-admin.site.register(Driver)
+class DriverForm(forms.ModelForm):
+    class Meta:
+        model = Driver
+        widgets = {
+                'name': forms.TextInput(attrs={'size': "50"}),
+                'vehicle_info': forms.TextInput(attrs={'size': "50"}),
+                'vehicle_plate_number': forms.TextInput(attrs={'size': "50"}),
+                'contact_phone_number': forms.TextInput(attrs={'size': "50"}),
+            }
+        fields = '__all__'
+
+class DriverAdmin(admin.ModelAdmin):
+    form = DriverForm
+
+admin.site.register(Driver, DriverAdmin)
 
 admin.site.register(DriverOrderRating)
 
@@ -154,8 +181,17 @@ admin.site.register(ProductGroup, ProductGroupAdmin)
 class MerchantVoucherInline(admin.StackedInline):
     model = MerchantVoucher
 
+class VoucherAdmin(forms.ModelForm):
+    class Meta:
+        model = Voucher
+        widgets = {
+            'code': forms.TextInput(attrs={'size': "50"}),
+            'description': forms.TextInput(attrs={'size': "150"}),
+        }
+        fields = '__all__'
 class VoucherAdmin(admin.ModelAdmin):
     inlines = [MerchantVoucherInline]
     model = Voucher
+    form = VoucherAdmin
 
 admin.site.register(Voucher, VoucherAdmin)
