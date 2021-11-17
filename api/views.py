@@ -13,7 +13,6 @@ from api.network_models import ShopProducts
 from api.util import responseJson
 from api.controllers import *
 from django.http import Http404
-from django.db import transaction
 from django.views.decorators.csrf import csrf_exempt
 import json
 
@@ -55,14 +54,9 @@ def products(request: HttpRequest, shopID : int) -> HttpResponse:
 @csrf_exempt
 def createOrder(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":
-        try:
-            with transaction.atomic():
-                body : dict = json.loads(request.body)
-                createOrderRequestObj : CreateOrderProduct = mapCreateOrderRequest(body)
-                return responseJson(create_order(createOrderRequestObj))
-        except Exception as e:
-            print(str(e))
-            raise Http404("Does not exist") 
+        body : dict = json.loads(request.body)
+        createOrderRequestObj : CreateOrderProduct = mapCreateOrderRequest(body)
+        return responseJson(create_order(createOrderRequestObj))
     else:
         raise Http404("Does not exist") 
 
@@ -99,18 +93,17 @@ def getOrderHistoryComplete(request: HttpRequest) -> HttpResponse:
 @csrf_exempt
 def rateOrder(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":
-        try:
-            with transaction.atomic():
-                body: dict = json.loads(request.body)
-                rateOrderRequest : RateOrderRequest = RateOrderRequest(
-                    order_id= body["orderId"],
-                    driver_score= body["driverScore"],
-                    order_score= body["orderScore"]
-                )
-                return HttpResponse(status=rate_order(rateOrderRequest))
-        except Exception as e:
-            print(str(e))
-            raise Http404("Does not exist") 
+        body: dict = json.loads(request.body)
+        rateOrderRequest : RateOrderRequest = RateOrderRequest(
+            order_id= body["orderId"],
+            driver_score= body["driverScore"],
+            order_score= body["orderScore"]
+        )
+        status : bool = rate_order(rateOrderRequest)
+        if status:
+            return HttpResponse(status = 200)
+        else:
+            return HttpResponse(status = 400)
     else:
         raise Http404("Does not exist") 
 
