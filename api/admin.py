@@ -1,6 +1,7 @@
 # Django Libs:
 from django.contrib import admin
 from django import forms
+from django.db import models
 from django.utils.html import format_html
 
 # Local Libs:
@@ -19,10 +20,33 @@ class ProductGroupInline(admin.StackedInline):
     model = ProductGroup
     form = ProductGroupInlineAdminForm
 
+class MerchantAdminForm(forms.ModelForm):
+    class Meta:
+        model = Merchant
+        widgets = {
+            'name': forms.TextInput(attrs={'size': "50"}),
+            'address': forms.TextInput(attrs={'size': "80"}),
+        }
+        fields = '__all__'
+
 class MerchantAdmin(admin.ModelAdmin):
+    def thumbnail_preview(self, obj):
+        return format_html('<img src="{}" width="auto" height="64px" />'.format(obj.thumbUrl.url))
+    thumbnail_preview.short_description = 'Thumbnail preview'
+
+    def thumbnail_preview_detail(self, obj):
+        return format_html('<img src="{}" width="auto" height="200px" />'.format(obj.thumbUrl.url))
+    thumbnail_preview_detail.short_description = 'Thumbnail preview'
+
     inlines = [ProductGroupInline]
     model = Merchant
-
+    # Using for list category display
+    list_display = ['id', 'name', 'rating_score_avg', 'thumbnail_preview']
+    # # Using for detail display
+    readonly_fields = ['thumbnail_preview_detail']
+    list_display_links = ['id', 'rating_score_avg', "name", 'thumbnail_preview']
+    form = MerchantAdminForm
+    
 admin.site.register(AdBanner)
 
 admin.site.register(Buyer)
@@ -41,7 +65,6 @@ admin.site.register(DriverOrderRating)
 admin.site.register(Merchant, MerchantAdmin)
 
 admin.site.register(MerchantBuyerFavorite)
-
 
 class MerchantCategoryAdminForm(forms.ModelForm):
     class Meta:
@@ -82,11 +105,27 @@ class MerchantCategoryAdmin(admin.ModelAdmin):
 
 admin.site.register(MerchantCategory, MerchantCategoryAdmin)
 
-admin.site.register(Order)
+class OrderProductInline(admin.StackedInline):
+    model = OrderProduct
+    extra = 0
+
+class OrderAdmin(admin.ModelAdmin):
+    model = Order
+    inlines = [OrderProductInline]
+
+admin.site.register(Order, OrderAdmin)
 
 admin.site.register(OrderProduct)
 
-admin.site.register(Product)
+class ProductInlineForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        widgets = {
+            'sku': forms.TextInput(attrs={'size': "50"}),
+            'name': forms.TextInput(attrs={'size': "50"}),
+            'unit_name': forms.TextInput(attrs={'size': "50"}),
+        }
+        fields = '__all__'
 
 class ProductGroupAdminForm(forms.ModelForm):
     class Meta:
@@ -95,9 +134,20 @@ class ProductGroupAdminForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'size': "50"})
         }
         fields = '__all__'
-    
+
+class ProductInlines(admin.StackedInline):
+    model = Product
+    extra = 1
+    form = ProductInlineForm
+    def thumbnail_preview_detail(self, obj):
+        return format_html('<img src="{}" width="auto" height="100px" />'.format(obj.thumbUrl.url))
+    thumbnail_preview_detail.short_description = 'Thumbnail preview'
+
+    readonly_fields = ['thumbnail_preview_detail']
+
 class ProductGroupAdmin(admin.ModelAdmin):
     form = ProductGroupAdminForm
+    inlines = [ProductInlines]
 
 admin.site.register(ProductGroup, ProductGroupAdmin)
 

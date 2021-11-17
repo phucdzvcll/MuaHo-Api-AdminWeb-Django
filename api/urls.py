@@ -9,4 +9,8 @@ urlpatterns = [
     path('getHotSearch', views.getHotSearch, name='getHotSearch'),
     path('searchShop', views.searchShop, name='searchShop'),
     path('shop/<int:shopID>/products', views.products, name='productShop'),
+    path('order/history/delivering', views.getOrderHistoryDelivering, name='getOrderHistoryDelivering'),
+    path('order/history/complete', views.getOrderHistoryComplete, name='getOrderHistoryComplete'),
+    path('order/createOrder', views.createOrder, name= 'createOrder'),
+    path("order/create", views.createOrder),
 ] 
