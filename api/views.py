@@ -1,12 +1,12 @@
-from django.http.response import HttpResponseBase
+from django.http.response import HttpResponseBase, JsonResponse
 from api.controllers.home_controller import get_categories
 from api.controllers.order_history_controller import get_complete_order_history, get_delevering_order_history
 from api.controllers.search_controller import get_hot_shop
 from api.controllers.search_controller import search_shop
 from api.controllers.search_controller import shop_product
 from api.controllers.home_controller import get_banners, get_categories
-from api.controllers.order_controller import create_order, rate_order
-from api.network_models import CreateOrderProduct, CreateOrderRequest, RateOrderRequest
+from api.controllers.order_controller import create_order, order_delivery_infor, rate_order
+from api.network_models import CreateOrderProduct, CreateOrderRequest, OrderDeliveryInfo, RateOrderRequest
 from django.http import HttpRequest, HttpResponse
 from api.controllers.voucher_controller import get_list_voucher
 from api.network_models import ShopProducts
@@ -112,4 +112,14 @@ def rateOrder(request: HttpRequest) -> HttpResponse:
             print(str(e))
             raise Http404("Does not exist") 
     else:
+        raise Http404("Does not exist") 
+
+def deliveryInfo(request: HttpRequest, orderId : int) -> HttpResponse:
+    if request.method == "GET":
+        result : OrderDeliveryInfo = order_delivery_infor(orderId)
+        if result is None:
+            raise Http404("Does not exist") 
+        else:
+            return responseJson(result)
+    else:    
         raise Http404("Does not exist") 

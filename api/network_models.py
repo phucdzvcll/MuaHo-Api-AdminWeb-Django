@@ -106,12 +106,12 @@ class OrderDetail():
 class OrderDeliveryInfo():
 
     def __init__(self, order_id: int, driver_name: str, driver_phone: str, plate_number: str, vehicle: str, total_order: float):  
-        self.order_id = order_id
-        self.driver_name = driver_name
-        self.driver_phone = driver_phone
-        self.plate_number = plate_number
+        self.orderId = order_id
+        self.driverName = driver_name
+        self.driverPhone = driver_phone
+        self.plateNumber = plate_number
         self.vehicle = vehicle
-        self.total_order = total_order
+        self.totalOrder = total_order
 
 class HotShop():
 

@@ -1,4 +1,6 @@
 from functools import cached_property
+
+from django.db.models.query import QuerySet
 from api.network_models import CreateOrderRequest, CreateOrderRespone, OrderDeliveryInfo, RateOrderRequest
 import datetime
 from api.models import Buyer, BuyerAddress, Driver, DriverOrderRating, Merchant, Order, OrderProduct, Product, Voucher
@@ -80,3 +82,21 @@ def rate_order(rateOrderResquest: RateOrderRequest) -> int:
             return 200
     except:
         return 404
+
+def order_delivery_infor(orderID : id) -> OrderDeliveryInfo:
+    try:
+        order : Order = Order.objects.get(id = orderID)
+        driver : Driver= order.driver
+        if driver is None:
+            return None
+        else:
+            return OrderDeliveryInfo(
+                order_id= orderID, 
+                driver_name= driver.name,
+                driver_phone= driver.contact_phone_number,
+                vehicle= driver.vehicle_info,
+                plate_number= driver.vehicle_plate_number,
+                total_order= order.total_amount)
+    except Exception as e:
+        print(str(e))
+        return None
