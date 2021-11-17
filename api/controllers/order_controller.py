@@ -90,6 +90,12 @@ def rate_order(rateOrderResquest: RateOrderRequest) -> bool:
                 driverScoreAvg : float = DriverOrderRating.objects.filter(driver__id = driver.id).aggregate(Avg('driver_rating_score'))["driver_rating_score__avg"]
                 driver.rating_score_avg = driverScoreAvg
                 driver.save(update_fields=['rating_score_avg'])
+
+                merchant : Merchant = Merchant.objects.get(id = order.merchant.id)
+                merchantScoreAvg : float = DriverOrderRating.objects.filter(driver__id = driver.id).aggregate(Avg('order_rating_score'))["order_rating_score__avg"]
+                merchant.rating_score_avg = merchantScoreAvg
+                merchant.save(update_fields=['rating_score_avg'])
+                
                 return True
     except Exception as e:
         print(str(e))
