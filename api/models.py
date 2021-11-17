@@ -169,7 +169,8 @@ class MerchantVoucher(models.Model):
         db_table = 'MerchantVoucher'
 
 class Order(models.Model):
-        # Accepted, Packing, Delivering, Success, Fail, Cancel
+  
+# Accepted, Packing, Delivering, Success, Fail, Cancel
     ACCEPTED = "ac"
     PACKING = "pk"
     DELIVERING = "dv"
@@ -199,6 +200,7 @@ class Order(models.Model):
         max_length=2,
         choices=STATUSES,
     )
+
     voucher_code = models.TextField(blank= True, null= True)
     total_before_discount = models.FloatField()
     voucher_discount = models.FloatField()
