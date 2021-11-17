@@ -1,11 +1,12 @@
+from django.http.response import HttpResponseBase
 from api.controllers.home_controller import get_categories
 from api.controllers.order_history_controller import get_complete_order_history, get_delevering_order_history
 from api.controllers.search_controller import get_hot_shop
 from api.controllers.search_controller import search_shop
 from api.controllers.search_controller import shop_product
 from api.controllers.home_controller import get_banners, get_categories
-from api.controllers.order_controller import create_order
-from api.network_models import CreateOrderProduct, CreateOrderRequest
+from api.controllers.order_controller import create_order, rate_order
+from api.network_models import CreateOrderProduct, CreateOrderRequest, RateOrderRequest
 from django.http import HttpRequest, HttpResponse
 from api.controllers.voucher_controller import get_list_voucher
 from api.network_models import ShopProducts
@@ -61,6 +62,7 @@ def createOrder(request: HttpRequest) -> HttpResponse:
                 return responseJson(create_order(createOrderRequestObj))
         except Exception as e:
             print(str(e))
+            raise Http404("Does not exist") 
     else:
         raise Http404("Does not exist") 
 
@@ -93,3 +95,21 @@ def getOrderHistoryDelivering(request: HttpRequest) -> HttpResponse:
 
 def getOrderHistoryComplete(request: HttpRequest) -> HttpResponse:
     return responseJson(get_complete_order_history(userId=1)) 
+
+@csrf_exempt
+def rateOrder(request: HttpRequest) -> HttpResponse:
+    if request.method == "POST":
+        try:
+            with transaction.atomic():
+                body: dict = json.loads(request.body)
+                rateOrderRequest : RateOrderRequest = RateOrderRequest(
+                    order_id= body["orderId"],
+                    driver_score= body["driverScore"],
+                    order_score= body["orderScore"]
+                )
+                return HttpResponse(status=rate_order(rateOrderRequest))
+        except Exception as e:
+            print(str(e))
+            raise Http404("Does not exist") 
+    else:
+        raise Http404("Does not exist") 
