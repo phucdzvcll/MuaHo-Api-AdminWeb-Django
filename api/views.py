@@ -65,13 +65,7 @@ def mapCreateOrderProduct(dictProduct : dict) -> CreateOrderProduct:
         )
     print(product)
     return product
-
-def getOrderHistoryDelivering(request: HttpRequest) -> HttpResponse:
-    return responseJson(get_delevering_order_history(userId=1))
-
-def getOrderHistoryComplete(request: HttpRequest) -> HttpResponse:
-    return responseJson(get_complete_order_history(userId=1)) 
-
+    
 @csrf_exempt
 def rateOrder(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":

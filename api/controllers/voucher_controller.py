@@ -23,10 +23,10 @@ def mapMerchantCategory(voucherDb: VoucherDb) -> VoucherNetwork:
         last_date= voucherDb.last_date,
     )
     
-def get_list_voucher(userId: int) -> List[VoucherNetwork]:
+def get_list_voucher(user_id: int) -> List[VoucherNetwork]:
     now: datetime = datetime.datetime.now()
     voucherModels: QuerySet[VoucherDb] = VoucherDb.objects.filter(last_date__gte=now, start_date__lte=now).prefetch_related("merchantvoucher_set")
-    voucherInWalletModels: QuerySet[VoucherDb] = BuyerVoucher.objects.filter(buyer__id=userId).values('voucher_id')
+    voucherInWalletModels: QuerySet[VoucherDb] = BuyerVoucher.objects.filter(buyer__id=user_id).values('voucher_id')
 
     voucherInWalletIds: List[int] = list(map(lambda voucher: voucher["voucher_id"], voucherInWalletModels))
     dbModels: List[VoucherDb] = []

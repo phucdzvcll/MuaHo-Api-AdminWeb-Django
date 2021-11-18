@@ -10,6 +10,11 @@ class AdBanner(models.Model):
     end_date = models.DateTimeField()
     thumbUrl = models.ImageField(upload_to='banner')
 
+    @property
+    def thumbUrl_url(self):
+	    if self.thumbUrl and hasattr(self.thumbUrl, 'url'):
+		    return self.thumbUrl.url
+    
     def __str__(self):
         return f"{self.id}"
 
@@ -147,6 +152,11 @@ class MerchantCategory(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.TextField()
     thumbUrl = models.ImageField(upload_to='category', blank=True)
+
+    @property
+    def thumbUrl_url(self):
+	    if self.thumbUrl and hasattr(self.thumbUrl, 'url'):
+		    return self.thumbUrl.url
 
     def __str__(self):
         return f"{self.id} - {self.name}"
