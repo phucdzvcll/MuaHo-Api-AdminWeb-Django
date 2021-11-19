@@ -34,8 +34,8 @@ def mapOrderHistory(order: Order) -> OrderHistory:
         status=mapOrderStatus(order.order_status),
         order_code=order.code,
     )
-def get_complete_order_history(userId: int) -> List[OrderHistory]:
-    dbModels: QuerySet[Order] = Order.objects.filter(Q(buyer_id=userId) & (Q(order_status=Order.SUCCESS) | Q(order_status=Order.CANCEL) | Q(order_status=Order.FAIL))).select_related("merchant")
+def get_complete_order_history(user_id: int) -> List[OrderHistory]:
+    dbModels: QuerySet[Order] = Order.objects.filter(Q(buyer_id=user_id) & (Q(order_status=Order.SUCCESS) | Q(order_status=Order.CANCEL) | Q(order_status=Order.FAIL))).select_related("merchant")
     list_history: List[OrderHistory] = list(map(mapOrderHistory, dbModels))
     return list_history
 
@@ -50,27 +50,27 @@ def mapOrderProductDetail(product: OrderProduct) -> OrderDetailProduct:
         product_id=product.product.id,
         price=product.price,
         quantity=product.quantity,
-        total=product.price * product.quantity, #miss total
+        total=product.total,
     )
 
 def mapOrderProduct(dbModels: QuerySet[OrderProduct]) -> List[OrderDetailProduct]:
     return list(map(mapOrderProductDetail, dbModels))
 
-def get_order_detail(order_id: int) -> Optional[OrderDetail]:
+def get_order_detail(order_id: int, user_id: int) -> Optional[OrderDetail]:
     dbModel: Order = Order.objects.get(id=order_id)
-    if dbModel != None:
+    if dbModel != None and dbModel.buyer.id == user_id:
         orderDetail : OrderDetail = OrderDetail(
             order_id=dbModel.id,
             products=mapOrderProduct(dbModel.orderproduct_set.all()),
-            voucher_code=None if dbModel.voucher is None else dbModel.voucher.code, #miss voucher_code
-            total_before_discount=0, #miss total_before_discount
-            voucher_discount=0, #miss voucher_discount
+            voucher_code=dbModel.voucher_code,
+            total_before_discount=dbModel.total_before_discount,
+            voucher_discount=dbModel.voucher_discount,
             total=dbModel.total_amount,
             delivery_address=dbModel.delivery_address_text,
             delivery_phone_number=dbModel.delivery_phone_number,
             shop_id=dbModel.merchant.id,
-            shop_name= dbModel.merchant.name, #miss shop_name
-            shop_address=dbModel.merchant.address, #miss shop_address
+            shop_name= dbModel.shop_name,
+            shop_address=dbModel.shop_address,
             status=mapOrderStatus(dbModel.order_status),
         )
         return orderDetail

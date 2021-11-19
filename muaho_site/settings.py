@@ -28,7 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+JWT_HS256_KEY = "asd*(askldmnasKL8902"
 # Application definition
 
 INSTALLED_APPS = [
@@ -41,6 +41,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -49,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'api.auth.middleware.JWTMiddleware.JWTAuthenticationMiddleware',
 ]
 
 ROOT_URLCONF = 'muaho_site.urls'
