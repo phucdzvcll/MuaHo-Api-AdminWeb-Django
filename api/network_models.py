@@ -171,3 +171,7 @@ class Category():
         self.name = name
         self.thumbUrl = thumb_url
 
+class SignInNw():
+    def __init__(self, jwt_token: str, user_name: str):  
+        self.jwtToken = jwt_token
+        self.userName = user_name

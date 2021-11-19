@@ -1,6 +1,11 @@
 from django.http import HttpResponse
 import json
 from datetime import date, datetime
+import firebase_admin
+from firebase_admin import credentials, auth
+
+cred = credentials.Certificate("firebase_sdk.json")
+firebase_admin.initialize_app(cred)
 
 def obj_to_dict(obj):
     print('obj_to_dict',obj)

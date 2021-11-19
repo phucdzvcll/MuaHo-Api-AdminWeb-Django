@@ -26,7 +26,7 @@ class AdBanner(models.Model):
 class Buyer(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.TextField()
-    phone_number = models.TextField()
+    phone_number = models.TextField(blank= True, null= False, default= "")
 
     def __str__(self):
         return f"{self.id} - {self.name}"
@@ -306,3 +306,11 @@ class Voucher(models.Model):
     class Meta:
         managed = True
         db_table = 'Voucher'
+
+class FirebaseBuyer(models.Model):
+    uid = models.TextField(primary_key=True)
+    buyer = models.OneToOneField(Buyer, on_delete=models.DO_NOTHING, db_constraint=False)
+
+    class Meta:
+        managed = True
+        db_table = 'API_FirebaseBuyer'
