@@ -31,7 +31,6 @@ def decode_jwt_token(jwt_token: Optional[str]) -> Optional[JWTUser]:
         raise ImproperlyConfigured('Missing setting JWT_HS256_KEY')
     if not jwt_token:
         return None
-    now = datetime.datetime.utcnow()
     try:
         payload = jwt.decode(jwt_token, key, algorithms="HS256")
         return JWTUser(
