@@ -1,5 +1,5 @@
-from django.http import Http404
 from django.http import HttpRequest, HttpResponse
+from django.http.response import HttpResponseNotFound
 from api.auth.log_in_required_mixin import JwtLoginRequiredMixin
 from api.util import responseJson
 from django.views import View
@@ -11,7 +11,7 @@ class DeliveryInfo(JwtLoginRequiredMixin ,View):
         user_id : int = self.get_jwt_user_id(request)
         result : OrderDeliveryInfo = order_delivery_infor(orderId, user_id)
         if result is None:
-            raise Http404("Does not exist") 
+            return HttpResponseNotFound()
         else:
             return responseJson(result)
     

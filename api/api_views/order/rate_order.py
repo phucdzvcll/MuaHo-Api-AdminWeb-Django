@@ -1,12 +1,13 @@
 from django.views import View
 from django.http import HttpRequest, HttpResponse
-from django.http.response import Http404
+from django.http.response import HttpResponseBadRequest
 import json
 from django.utils.decorators import method_decorator
 from api.auth.log_in_required_mixin import JwtLoginRequiredMixin
 from api.network_models import RateOrderRequest
 from django.views.decorators.csrf import csrf_exempt
 from api.controllers.order_controller import rate_order
+
 
 @method_decorator(csrf_exempt, name='dispatch')
 class RateOrder(JwtLoginRequiredMixin ,View):
@@ -20,6 +21,6 @@ class RateOrder(JwtLoginRequiredMixin ,View):
         )
         status : bool = rate_order(rateOrderRequest, user_id)
         if status:
-            return HttpResponse(status = 200)
+            return HttpResponse()
         else:
-            return HttpResponse(status = 400)
+            return HttpResponseBadRequest()

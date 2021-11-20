@@ -1,10 +1,10 @@
 from django.http.request import HttpRequest
-from django.http.response import Http404, HttpResponse
+from django.http.response import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 import json
 from django.utils.decorators import method_decorator
-from api.controllers.sign_in_controller import sign_in
+from api.controllers.user_controller import sign_in
 
 
 from api.util import responseJson
@@ -17,7 +17,8 @@ class SignInView(View):
         if result:
             return responseJson(result)
         else:
-            return HttpResponse(status = 400)
+            return HttpResponseBadRequest()
+            
         
         
         

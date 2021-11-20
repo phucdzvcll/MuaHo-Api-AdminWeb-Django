@@ -13,6 +13,7 @@ from api.api_views.voucher.voucher import VoucherApiView
 from api.api_views.order.create_order import CreateOrder
 from api.api_views.order.rate_order import RateOrder
 from api.api_views.user.sign_in import SignInView
+from api.api_views.user.refresh_token import RefreshTokenView
 from . import views
 
 urlpatterns = [
@@ -28,6 +29,7 @@ urlpatterns = [
     path('order/history/delivering', DeleveringOrderHistoryApiView.as_view(), name='getOrderHistoryDelivering'),
     path('order/history/complete', CompleteOrderHistoryApiView.as_view(), name='getOrderHistoryComplete'),
     path('order/<int:orderId>', OrderDetailApiView.as_view(), name='getOrderDetail'),
-    path('user/signin', SignInView.as_view(), name='signIn')
+    path('user/signin', SignInView.as_view(), name='signIn'),
+    path('user/refresh_token', RefreshTokenView.as_view(), name='refreshToken'),
 ]
 
