@@ -18,22 +18,14 @@ class AdBanner(models.Model):
     def __str__(self):
         return f"{self.id}"
 
-    class Meta:
-        managed = True
-        db_table = 'AdBanner'
-
 
 class Buyer(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.TextField()
-    phone_number = models.TextField()
+    phone_number = models.TextField(blank= True, null= False, default= "")
 
     def __str__(self):
         return f"{self.id} - {self.name}"
-
-    class Meta:
-        managed = True
-        db_table = 'Buyer'
 
 class BuyerAddress(models.Model):
     id = models.AutoField(primary_key=True)
@@ -44,10 +36,6 @@ class BuyerAddress(models.Model):
 
     def __str__(self):
         return f"{self.id} - {self.address}"
-
-    class Meta:
-        managed = True
-        db_table = 'BuyerAddress'
 
 
 class BuyerLoginInfo(models.Model):
@@ -64,11 +52,6 @@ class BuyerLoginInfo(models.Model):
     def __str__(self):
         return f"{self.id} - {self.user_name}"
 
-    class Meta:
-        managed = True
-        db_table = 'BuyerLoginInfo'
-
-
 class BuyerVoucher(models.Model):
     id = models.AutoField(primary_key=True)
     voucher = models.ForeignKey('Voucher', models.DO_NOTHING, db_constraint=False)
@@ -76,10 +59,6 @@ class BuyerVoucher(models.Model):
 
     def __str__(self):
         return f"{self.id}"
-
-    class Meta:
-        managed = True
-        db_table = 'BuyerVoucher'
 
 
 class Driver(models.Model):
@@ -94,10 +73,6 @@ class Driver(models.Model):
     def __str__(self):
         return f"{self.id} - {self.name}"
 
-    class Meta:
-        managed = True
-        db_table = 'Driver'
-
 
 class DriverOrderRating(models.Model):
     id = models.AutoField(primary_key=True)
@@ -109,10 +84,6 @@ class DriverOrderRating(models.Model):
 
     def __str__(self):
         return f"{self.id}"
-
-    class Meta:
-        managed = True
-        db_table = 'DriverOrderRating'
 
 
 class Merchant(models.Model):
@@ -128,10 +99,6 @@ class Merchant(models.Model):
     def __str__(self):
         return f"{self.id} - {self.name}"
 
-    class Meta:
-        managed = True
-        db_table = 'Merchant'
-
 
 class MerchantBuyerFavorite(models.Model):
     id = models.AutoField(primary_key=True)
@@ -142,10 +109,6 @@ class MerchantBuyerFavorite(models.Model):
 
     def __str__(self):
         return f"{self.id}"
-
-    class Meta:
-        managed = True
-        db_table = 'MerchantBuyerFavorite'
 
 
 class MerchantCategory(models.Model):
@@ -161,10 +124,6 @@ class MerchantCategory(models.Model):
     def __str__(self):
         return f"{self.id} - {self.name}"
 
-    class Meta:
-        managed = True
-        db_table = 'MerchantCategory'
-
 
 class MerchantVoucher(models.Model):
     id = models.AutoField(primary_key=True)
@@ -173,10 +132,6 @@ class MerchantVoucher(models.Model):
 
     def __str__(self):
         return f"{self.id}"
-
-    class Meta:
-        managed = True
-        db_table = 'MerchantVoucher'
 
 class Order(models.Model):
   
@@ -223,10 +178,6 @@ class Order(models.Model):
     def __str__(self):
         return f"{self.id} - {self.code}"
 
-    class Meta:
-        managed = True
-        db_table = 'Order'
-
 
 class OrderProduct(models.Model):
     id = models.AutoField(primary_key=True)
@@ -241,10 +192,6 @@ class OrderProduct(models.Model):
     def __str__(self):
         return f"{self.id} - Product: {self.product}"
 
-    class Meta:
-        managed = True
-        db_table = 'OrderProduct'
-
 
 class Product(models.Model):
     id = models.AutoField(primary_key=True)
@@ -258,10 +205,6 @@ class Product(models.Model):
     def __str__(self):
         return f"{self.id} - {self.name}"
 
-    class Meta:
-        managed = True
-        db_table = 'Product'
-
 
 class ProductGroup(models.Model):
     id = models.AutoField(primary_key=True)
@@ -270,11 +213,6 @@ class ProductGroup(models.Model):
 
     def __str__(self):
         return f"{self.id} - {self.name}"
-
-    class Meta:
-        managed = True
-        db_table = 'ProductGroup'
-
 
 class Voucher(models.Model):
     # Constants voucher type
@@ -303,6 +241,6 @@ class Voucher(models.Model):
     def __str__(self):
         return f"{self.id} - {self.code}"
 
-    class Meta:
-        managed = True
-        db_table = 'Voucher'
+class FirebaseBuyer(models.Model):
+    uid = models.TextField(primary_key=True)
+    buyer = models.OneToOneField(Buyer, on_delete=models.DO_NOTHING, db_constraint=False)

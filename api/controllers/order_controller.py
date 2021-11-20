@@ -1,4 +1,4 @@
-from functools import cached_property
+from typing import Optional
 from django.db.models import Avg
 from django.db.models.query import QuerySet
 from api.network_models import CreateOrderRequest, CreateOrderRespone, OrderDeliveryInfo, RateOrderRequest
@@ -68,13 +68,15 @@ def get_order_delivery_info(order_id: int) -> OrderDeliveryInfo:
     return 'do some magic!'
 
 
-def rate_order(rateOrderResquest: RateOrderRequest) -> bool:
+def rate_order(rateOrderResquest: RateOrderRequest, user_id: int) -> bool:
     order : Order
     try:
         with transaction.atomic():
             order = Order.objects.get(id = rateOrderResquest.orderId)
             
-            if order.order_status != Order.SUCCESS and order.order_status != Order.FAIL:
+            if order.buyer.id != user_id:
+                return False
+            elif order.order_status != Order.SUCCESS and order.order_status != Order.FAIL:
                 return False
             else:
                 now: datetime = datetime.datetime.now()
@@ -95,17 +97,19 @@ def rate_order(rateOrderResquest: RateOrderRequest) -> bool:
                 merchantScoreAvg : float = DriverOrderRating.objects.filter(driver__id = driver.id).aggregate(Avg('order_rating_score'))["order_rating_score__avg"]
                 merchant.rating_score_avg = merchantScoreAvg
                 merchant.save(update_fields=['rating_score_avg'])
-                
+
                 return True
     except Exception as e:
         print(str(e))
         return False
 
-def order_delivery_infor(orderID : id) -> OrderDeliveryInfo:
+def order_delivery_infor(orderID : int, user_id: int) -> Optional[OrderDeliveryInfo]:
     try:
         order : Order = Order.objects.get(id = orderID)
         driver : Driver= order.driver
-        if driver is None:
+        if order.buyer.id != user_id:
+            return None
+        elif driver is None:
             return None
         else:
             return OrderDeliveryInfo(

@@ -1,5 +1,4 @@
 from django.views import View
-from api.auth.jwt_user import get_jwt_user_id
 from api.auth.log_in_required_mixin import JwtLoginRequiredMixin
 from api.controllers.voucher_controller import get_list_voucher
 from django.http import HttpRequest, HttpResponse
@@ -7,5 +6,5 @@ from api.util import responseJson
 
 class VoucherApiView(JwtLoginRequiredMixin, View):
     def get(self, request: HttpRequest) -> HttpResponse:
-        user_id = get_jwt_user_id(request)
+        user_id = self.get_jwt_user_id(request)
         return responseJson(get_list_voucher(user_id=user_id))
