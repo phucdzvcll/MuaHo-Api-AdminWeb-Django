@@ -32,11 +32,11 @@ class MerchantAdminForm(forms.ModelForm):
 
 class MerchantAdmin(admin.ModelAdmin):
     def thumbnail_preview(self, obj):
-        return format_html('<img src="{}" width="auto" height="64px" />'.format(obj.thumbUrl.url))
+        return format_html('<img src="{}" width="auto" height="64px" />'.format(obj.thumbUrl_url))
     thumbnail_preview.short_description = 'Thumbnail preview'
 
     def thumbnail_preview_detail(self, obj):
-        return format_html('<img src="{}" width="auto" height="200px" />'.format(obj.thumbUrl.url))
+        return format_html('<img src="{}" width="auto" height="200px" />'.format(obj.thumbUrl_url))
     thumbnail_preview_detail.short_description = 'Thumbnail preview'
 
     inlines = [ProductGroupInline]
@@ -106,11 +106,11 @@ class MerchantCategoryAdmin(admin.ModelAdmin):
     # https://sorl-thumbnail.readthedocs.io/en/latest/examples.html#admin-examples
 
     def thumbnail_preview(self, obj):
-        return format_html('<img src="{}" width="auto" height="64px" />'.format(obj.thumbUrl.url))
+        return format_html('<img src="{}" width="auto" height="64px" />'.format(obj.thumbUrl_url))
     thumbnail_preview.short_description = 'Thumbnail preview'
     
     def thumbnail_preview_detail(self, obj):
-        return format_html('<img src="{}" width="auto" height="200px" />'.format(obj.thumbUrl.url))
+        return format_html('<img src="{}" width="auto" height="200px" />'.format(obj.thumbUrl_url))
     thumbnail_preview_detail.short_description = 'Thumbnail preview'
 
     def edit_button(self, obj):
@@ -167,7 +167,7 @@ class ProductInlines(admin.StackedInline):
     extra = 1
     form = ProductInlineForm
     def thumbnail_preview_detail(self, obj):
-        return format_html('<img src="{}" width="auto" height="100px" />'.format(obj.thumbUrl.url))
+        return format_html('<img src="{}" width="auto" height="100px" />'.format(obj.thumbUrl_url))
     thumbnail_preview_detail.short_description = 'Thumbnail preview'
 
     readonly_fields = ['thumbnail_preview_detail']

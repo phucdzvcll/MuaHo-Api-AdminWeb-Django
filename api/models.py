@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils import tree
 
 class AdBanner(models.Model):
     id = models.AutoField(primary_key=True)
@@ -95,6 +94,11 @@ class Merchant(models.Model):
     category = models.ForeignKey('MerchantCategory', models.DO_NOTHING, db_constraint=False)
     thumbUrl = models.ImageField(upload_to='merchant', default='', blank=True)
     rating_score_avg = models.FloatField()
+
+    @property
+    def thumbUrl_url(self):
+	    if self.thumbUrl and hasattr(self.thumbUrl, 'url'):
+		    return self.thumbUrl.url
 
     def __str__(self):
         return f"{self.id} - {self.name}"
@@ -201,6 +205,11 @@ class Product(models.Model):
     unit_name = models.TextField(blank=True)
     group = models.ForeignKey('ProductGroup', models.DO_NOTHING, db_constraint=False)
     thumbUrl = models.ImageField(upload_to = 'product', default='', blank=True)
+
+    @property
+    def thumbUrl_url(self):
+	    if self.thumbUrl and hasattr(self.thumbUrl, 'url'):
+		    return self.thumbUrl.url
 
     def __str__(self):
         return f"{self.id} - {self.name}"
