@@ -2,3 +2,4 @@ Django==3.2.9
 pyjwt==2.3.0
 firebase-admin
 Pillow
+django-location-field==2.1.0

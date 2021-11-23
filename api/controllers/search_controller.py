@@ -14,7 +14,7 @@ def get_hot_shop() -> HotSearch:
 
 
 def mapMerchant(merchant: Merchant) -> HotShop:
-    return HotShop(id=merchant.id, name=merchant.name, thumb_url=merchant.thumbUrl.url, address=merchant.address, star=merchant.rating_score_avg)
+    return HotShop(id=merchant.id, name=merchant.name, thumb_url=merchant.thumbUrl_url, address=merchant.address, star=merchant.rating_score_avg)
 
 def mapKeyword(name: str) -> HotSearchKeyword:
     return HotSearchKeyword(name=name)
@@ -26,7 +26,7 @@ def search_shop(keyword: str) -> List[ShopSearch]:
     return list_shop_search
  
 def mapSearchMerchant(merchant: Merchant) -> ShopSearch:
-    return ShopSearch(id=merchant.id, name=merchant.name, thumb_url=merchant.thumbUrl.url, address=merchant.address, star=merchant.rating_score_avg)
+    return ShopSearch(id=merchant.id, name=merchant.name, thumb_url=merchant.thumbUrl_url, address=merchant.address, star=merchant.rating_score_avg, location=merchant.location)
 
 def shop_product(shopID : int) -> ShopProducts:
     try: 
@@ -54,7 +54,7 @@ def mapProductGroup(productGroup : ProductGroup) -> ProductGroupNw:
     return ProductGroupNw(groupId=productGroup.id, groupName=productGroup.name, products = list_products)
 
 def mapProductInGroup(product : Product) -> ProductInGroup:
-    return ProductInGroup(productId = product.id, productName=product.name, productPrice=product.price, unit=product.unit_name, thumbUrl=product.thumbUrl.url)
+    return ProductInGroup(productId = product.id, productName=product.name, productPrice=product.price, unit=product.unit_name, thumbUrl=product.thumbUrl_url)
 
 def mapMerchantVoucher(voucher : Voucher):
     voucherdb : Voucher = Voucher.objects.get(id = voucher.id)

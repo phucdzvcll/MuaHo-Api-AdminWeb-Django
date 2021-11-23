@@ -28,7 +28,14 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Custom field
 JWT_HS256_KEY = "asd*(askldmnasKL8902"
+
+LOCATION_FIELD = {
+    'map.provider': 'openstreetmap',
+    'search.provider': 'nominatim',
+}
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -39,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'location_field.apps.DefaultConfig',
 ]
 
 AUTHENTICATION_BACKENDS = [

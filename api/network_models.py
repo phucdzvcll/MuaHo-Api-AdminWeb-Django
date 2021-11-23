@@ -30,12 +30,13 @@ class ShopVoucher():
 
 class ShopSearch():
 
-    def __init__(self, id: int, name: str, address: str, thumb_url: str, star: float):  
+    def __init__(self, id: int, name: str, address: str, thumb_url: str, star: float, location):  
         self.id = id
         self.name = name
         self.address = address
         self.thumb_url = thumb_url
         self.star = star
+        self.location = location
 
 class ProductInGroup():
 

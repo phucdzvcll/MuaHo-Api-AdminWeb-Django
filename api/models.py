@@ -1,4 +1,5 @@
 from django.db import models
+from location_field.models.plain import PlainLocationField
 
 class AdBanner(models.Model):
     id = models.AutoField(primary_key=True)
@@ -30,6 +31,7 @@ class BuyerAddress(models.Model):
     id = models.AutoField(primary_key=True)
     buyer = models.ForeignKey(Buyer, models.DO_NOTHING, db_constraint=False)
     address = models.TextField()
+    location = PlainLocationField(based_fields=['address'], zoom=8, null=True, default=None)
     contact_phone_number = models.TextField()
     create_date = models.DateTimeField()
 
@@ -89,11 +91,10 @@ class Merchant(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.TextField()
     address = models.TextField(blank=True, null=True)
-    location_lat = models.FloatField()
-    location_lng = models.FloatField()
+    location = PlainLocationField(based_fields=['address'], zoom=8, null=True, default=None)
     category = models.ForeignKey('MerchantCategory', models.DO_NOTHING, db_constraint=False)
-    thumbUrl = models.ImageField(upload_to='merchant', default='', blank=True)
     rating_score_avg = models.FloatField()
+    thumbUrl = models.ImageField(upload_to='merchant', default='', blank=True)
 
     @property
     def thumbUrl_url(self):
@@ -161,6 +162,7 @@ class Order(models.Model):
     buyer = models.ForeignKey(Buyer, models.DO_NOTHING, db_column='buyerId', db_constraint=False)
     delivery_address = models.ForeignKey(BuyerAddress, models.DO_NOTHING, db_constraint=False)
     delivery_address_text = models.TextField(blank=True, null=True)
+    delivery_location = PlainLocationField(based_fields=['delivery_address_text'], zoom=8, null=True, default=None)
     delivery_phone_number = models.TextField(blank=True, null=True)
     voucher = models.ForeignKey('Voucher', models.DO_NOTHING, blank=True, null=True, db_constraint=False)
     total_amount = models.FloatField()
@@ -175,6 +177,7 @@ class Order(models.Model):
     voucher_discount = models.FloatField()
     shop_name = models.TextField()
     shop_address = models.TextField()
+    shop_location = PlainLocationField(based_fields=['shop_address'], zoom=8, null=True, default=None)
     item_count = models.IntegerField(default=0)
     order_date = models.DateTimeField()
     last_update_date = models.DateTimeField()
