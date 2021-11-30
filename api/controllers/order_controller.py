@@ -59,7 +59,6 @@ def create_order(createOrderRequest: CreateOrderRequest) -> CreateOrderRespone:
                     )
             return CreateOrderRespone(status= 'success')
     except Exception as e:
-        print(str(e))
         return CreateOrderRespone(status= 'error')
 
 
@@ -100,7 +99,6 @@ def rate_order(rateOrderResquest: RateOrderRequest, user_id: int) -> bool:
 
                 return True
     except Exception as e:
-        print(str(e))
         return False
 
 def order_delivery_infor(orderID : int, user_id: int) -> Optional[OrderDeliveryInfo]:
@@ -120,5 +118,4 @@ def order_delivery_infor(orderID : int, user_id: int) -> Optional[OrderDeliveryI
                 plate_number= driver.vehicle_plate_number,
                 total_order= order.total_amount)
     except Exception as e:
-        print(str(e))
         return None

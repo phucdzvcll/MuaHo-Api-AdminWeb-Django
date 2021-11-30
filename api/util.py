@@ -2,13 +2,12 @@ from django.http import HttpResponse
 import json
 from datetime import date, datetime
 import firebase_admin
-from firebase_admin import credentials, auth
+from firebase_admin import credentials
 
 cred = credentials.Certificate("firebase_sdk.json")
 firebase_admin.initialize_app(cred)
 
 def obj_to_dict(obj):
-    print('obj_to_dict',obj)
     if isinstance(obj, (datetime)):
         return '{:%Y-%m-%d %H:%M:%S}'.format(obj)
     if isinstance(obj, (date)):

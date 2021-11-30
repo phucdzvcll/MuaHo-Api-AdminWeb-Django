@@ -15,11 +15,9 @@ def mapCreateOrderProduct(dictProduct : dict) -> CreateOrderProduct:
             quantity= dictProduct["quantity"],
             total= dictProduct["total"]
             )
-        print(product)
         return product
 
 def mapCreateOrderRequest(dictCreateOrder : dict, user_id: int) -> CreateOrderRequest:
-    print(dictCreateOrder)
     return CreateOrderRequest(
         voucher_id= dictCreateOrder["voucherId"],
         total_before_discount= dictCreateOrder["totalBeforeDiscount"],

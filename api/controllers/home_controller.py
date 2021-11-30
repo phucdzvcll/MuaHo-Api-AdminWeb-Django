@@ -15,7 +15,6 @@ def mapBanner(adBanner: AdBanner) -> Banner:
 
 def mapThumbUrl(thumb_url):
     if thumb_url is not None:
-        print("mapThumbUrl", vars(thumb_url))
         return thumb_url.url 
     else:
         return ""
