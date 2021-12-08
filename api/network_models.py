@@ -83,11 +83,13 @@ class OrderHistory():
 
 class OrderDetailProduct():
 
-    def __init__(self, product_id: int, price: float, quantity: int, total: float):  
+    def __init__(self, product_id: int, price: float, quantity: int, total: float, product_name: str, product_thumb_url: str,):  
         self.productId = product_id
         self.price = price
         self.quantity = quantity
         self.total = total
+        self.productName = product_name
+        self.productThumbUrl = product_thumb_url
 
 class OrderDetail():
     def __init__(self, order_id: int, products: List[OrderDetailProduct], voucher_code: str, total_before_discount: float, voucher_discount: float, total: float, delivery_address: str, delivery_phone_number: str, shop_id: int, shop_name: str, shop_address: str, status: str):  

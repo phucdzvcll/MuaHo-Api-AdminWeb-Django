@@ -213,7 +213,7 @@ class Product(models.Model):
     def thumbUrl_url(self):
 	    if self.thumbUrl and hasattr(self.thumbUrl, 'url'):
 		    return self.thumbUrl.url
-
+    
     def __str__(self):
         return f"{self.id} - {self.name}"
 

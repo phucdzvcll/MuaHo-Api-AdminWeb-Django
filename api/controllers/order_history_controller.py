@@ -48,6 +48,8 @@ def get_delevering_order_history(userId: int) -> List[OrderHistory]:
 def mapOrderProductDetail(product: OrderProduct) -> OrderDetailProduct:
     return OrderDetailProduct(
         product_id=product.product.id,
+        product_name=product.product_name,
+        product_thumb_url=product.product.thumbUrl_url,
         price=product.price,
         quantity=product.quantity,
         total=product.total,
