@@ -17,6 +17,7 @@ def mapUserAddress(address: BuyerAddress) -> UserAddressNetwork:
         contact_phone_number=address.contact_phone_number,
         lat=locations[0],
         lng=locations[1],
+        create_date = address.create_date
     )
     
 def get_list_address(user_id: int) -> List[UserAddressNetwork]:
@@ -27,6 +28,7 @@ def get_list_address(user_id: int) -> List[UserAddressNetwork]:
 
 def create_user_address(user_id: int, address: CreateUserAddressRequest) -> bool:
     try:
+        now: datetime = datetime.datetime.now()
         location = "{lat},{lng}".format(lat = address.lat, lng = address.lng)
         buyer : Buyer = Buyer.objects.get(id = user_id)
         buyerAddress : BuyerAddress = BuyerAddress(
@@ -34,6 +36,7 @@ def create_user_address(user_id: int, address: CreateUserAddressRequest) -> bool
                         address = address.address,
                         location = location,
                         contact_phone_number = address.contact_phone_number,
+                        create_date= now,
                     )
         buyerAddress.save()
         return True
