@@ -57,7 +57,7 @@ def create_order(createOrderRequest: CreateOrderRequest) -> CreateOrderRespone:
                     product_name = product.name,
                     total = requestPropduct.total
                     )
-            return CreateOrderRespone(status= 'success')
+            return CreateOrderRespone(status= 'success', orderId= order.id)
     except Exception as e:
         return CreateOrderRespone(status= 'error')
 

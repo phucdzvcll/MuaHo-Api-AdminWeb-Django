@@ -1,5 +1,5 @@
 import datetime
-from typing import List
+from typing import List, Optional
 
 class Banner():
     def __init__(self, id: int, subject: str, description: str, thumb_url: str, deeplink: str):
@@ -138,8 +138,9 @@ class HotSearch():
 
 class CreateOrderRespone():
 
-    def __init__(self, status: str):  
+    def __init__(self, status: str, orderId: Optional[int]):  
         self.status = status
+        self.orderId = orderId
 
 
 class CreateOrderProduct():
