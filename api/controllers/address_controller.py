@@ -38,5 +38,6 @@ def create_user_address(user_id: int, address: CreateUserAddressRequest) -> bool
         buyerAddress.save()
         return True
     except Exception as e:
+        print("create_user_address", e)
         return False
     
