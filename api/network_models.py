@@ -166,7 +166,20 @@ class CreateOrderRequest():
         self.deliveryAddressID = deliveryAddressID
         self.shopId = shop_id
 
+class CreateUserAddressRequest():
+    def __init__(self, contact_phone_number: str, address: str, lat: float, lng: float):  
+        self.contact_phone_number = contact_phone_number
+        self.address = address
+        self.lat = lat
+        self.lng = lng
 
+class UserAddressNetwork():
+    def __init__(self, id: int, contact_phone_number: str, address: str, lat: float, lng: float):  
+        self.id = id
+        self.contact_phone_number = contact_phone_number
+        self.address = address
+        self.lat = lat
+        self.lng = lng
 
 class Category():
 

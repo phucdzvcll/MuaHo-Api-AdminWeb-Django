@@ -59,7 +59,7 @@ def create_order(createOrderRequest: CreateOrderRequest) -> CreateOrderRespone:
                     )
             return CreateOrderRespone(status= 'success', orderId= order.id)
     except Exception as e:
-        return CreateOrderRespone(status= 'error')
+        return CreateOrderRespone(status= 'error', orderId= None)
 
 
 
