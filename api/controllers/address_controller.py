@@ -15,8 +15,8 @@ def mapUserAddress(address: BuyerAddress) -> UserAddressNetwork:
         address= address.address,
         id=address.id,
         contact_phone_number=address.contact_phone_number,
-        lat=locations[0],
-        lng=locations[1],
+        lat=float(locations[0]),
+        lng=float(locations[1]),
         create_date = address.create_date
     )
     
