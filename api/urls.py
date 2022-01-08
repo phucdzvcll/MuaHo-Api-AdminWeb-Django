@@ -10,6 +10,8 @@ from api.api_views.search.get_hot_search import GetHotSearch
 from api.api_views.search.product import SearchProduct
 from api.api_views.search.search_shop import SearchShop
 from api.api_views.user.address import AddressApiView
+from api.api_views.user.update_contact_phone import UpdateContactPhone
+from api.api_views.user.update_user_name import UpdateUseName
 from api.api_views.voucher.voucher import VoucherApiView
 from api.api_views.order.create_order import CreateOrder
 from api.api_views.order.rate_order import RateOrder
@@ -32,6 +34,8 @@ urlpatterns = [
     path('order/<int:orderId>', OrderDetailApiView.as_view(), name='getOrderDetail'),
     path('user/signin', SignInView.as_view(), name='signIn'),
     path('user/refresh_token', RefreshTokenView.as_view(), name='refreshToken'),
+    path('user/update/username', UpdateUseName.as_view(), name='updateUserName'),
+    path('user/update/phonenumber', UpdateContactPhone.as_view(), name='updatePhoneNumber'),
     path('user/address', AddressApiView.as_view(), name='getAddress'),
 ]
 
