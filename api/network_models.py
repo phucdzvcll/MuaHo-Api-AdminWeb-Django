@@ -190,12 +190,20 @@ class Category():
         self.thumbUrl = thumb_url
 
 class SignInNw():
-    def __init__(self, jwt_token: str, user_name: str, refresh_token: str):  
+    def __init__(self, jwt_token: str, user_name: str, refresh_token: str, email: str):  
         self.jwtToken = jwt_token
         self.userName = user_name
+        self.email = email
         self.refreshToken = refresh_token
 
 class RefreshTokenNw():
     def __init__(self, jwt_token: str):  
         self.jwtToken = jwt_token
 
+class UserNameResponse():
+    def __init__(self, user_name: str):  
+        self.userName = user_name
+
+class PhoneNumberResponse():
+    def __init__(self, phone_number: str):  
+        self.phoneNumber = phone_number
