@@ -207,3 +207,11 @@ class UserNameResponse():
 class PhoneNumberResponse():
     def __init__(self, phone_number: str):  
         self.phoneNumber = phone_number
+
+class MaintenanceResponse():
+    def __init__(self, totalMinutes : int):
+        self.totalMinutes = totalMinutes
+        
+class CheckMantenanceResponse():
+    def __init__(self, maintenanceStatus : bool):
+        self.maintenanceStatus = maintenanceStatus

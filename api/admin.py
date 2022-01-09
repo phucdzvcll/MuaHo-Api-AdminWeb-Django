@@ -6,7 +6,7 @@ from django.forms import widgets
 from django.utils.html import format_html
 
 # Local Libs:
-from .models import AdBanner, Buyer, BuyerAddress, BuyerLoginInfo, BuyerVoucher, Driver, DriverOrderRating, Merchant, MerchantBuyerFavorite, MerchantCategory, MerchantVoucher, Order, OrderProduct, Product, ProductGroup, Voucher
+from .models import AdBanner, Buyer, BuyerAddress, BuyerLoginInfo, BuyerVoucher, Driver, DriverOrderRating,APIConfig, Merchant, MerchantBuyerFavorite, MerchantCategory, MerchantVoucher, Order, OrderProduct, Product, ProductGroup, Voucher
 
 
 class ProductGroupInlineAdminForm(forms.ModelForm):
@@ -195,3 +195,4 @@ class VoucherAdmin(admin.ModelAdmin):
     form = VoucherAdmin
 
 admin.site.register(Voucher, VoucherAdmin)
+admin.site.register(APIConfig)

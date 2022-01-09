@@ -2,6 +2,7 @@ from django.urls import path
 
 from api.api_views.home.banner import BannerApiView
 from api.api_views.home.category import CategoryApiView
+from api.api_views.maintenance.maintenance_status import MaintenanceStatusView
 from api.api_views.order_delivery.delivery_info import DeliveryInfo
 from api.api_views.order_history.history_complete import CompleteOrderHistoryApiView
 from api.api_views.order_history.history_delevering import DeleveringOrderHistoryApiView
