@@ -5,7 +5,6 @@ from api.models import APIConfig
 import json
 from datetime import datetime
 
-
 class MaintenanceStatus:
     def __init__(self, status: bool, total_minutes: int):
         self.status = status
