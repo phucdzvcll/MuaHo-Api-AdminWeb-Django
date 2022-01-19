@@ -15,10 +15,7 @@ class SignInView(View):
     def post(self, request: HttpRequest) -> HttpResponse:
         body: dict = json.loads(request.body)
         firebaseToken: str = body["firebase_token"]
-        email: str = body["email"]
-        display_name: str = body["dislay_name"]
-        result = sign_in(firebaseToken=firebaseToken,
-                         displayName=display_name, email=email)
+        result = sign_in(firebaseToken=firebaseToken)
         if result:
             return responseJson(result)
         else:

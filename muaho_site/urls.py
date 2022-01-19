@@ -18,9 +18,12 @@ from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
 
+from api.api_views.maintenance.maintenance_status import MaintenanceStatusView
+
 urlpatterns = [
     path('api/', include('api.urls')),
     path('admin/', admin.site.urls),
+    path("maintenance/status", MaintenanceStatusView.as_view(), name="maintenanceStatusView")
 ]
 
 if settings.DEBUG:

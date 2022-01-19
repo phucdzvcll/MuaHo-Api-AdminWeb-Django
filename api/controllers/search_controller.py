@@ -1,10 +1,10 @@
-from api.network_models import HotSearch, HotSearchKeyword, HotShop, ProductInGroup, ShopSearch, ShopProducts, ShopVoucher
+from api.network_models import Category, HotSearch, HotSearchKeyword, HotShop, ProductInGroup, ShopSearch, ShopProducts, ShopSearchByCategory, ShopVoucher
 from api.network_models import ProductGroup as ProductGroupNw
 from django.db.models.query import QuerySet
-from api.models import Merchant, MerchantVoucher, Product, ProductGroup, Voucher
+from api.models import Merchant, MerchantCategory, MerchantVoucher, Product, ProductGroup, Voucher
 from django.db.models import Q
 import datetime
-from typing import List
+from typing import List, Optional
 
 def get_hot_shop() -> HotSearch:
     dbModels: QuerySet[Merchant] = Merchant.objects.all().order_by('-rating_score_avg')[0:10]
@@ -59,3 +59,16 @@ def mapProductInGroup(product : Product) -> ProductInGroup:
 def mapMerchantVoucher(voucher : Voucher):
     voucherdb : Voucher = Voucher.objects.get(id = voucher.id)
     return ShopVoucher(id=voucherdb.id, code=voucherdb.code, description=voucherdb.description)
+
+
+def getMerchantByCategory(categoryID: int) -> Optional[ShopSearchByCategory]:
+    try:
+        merchantCategory: MerchantCategory = MerchantCategory.objects.get(
+            id=categoryID)
+        dbModels: QuerySet[Merchant] = Merchant.objects.filter(
+            category__id=categoryID)
+        list_shop_search: List[ShopSearch] = list(
+            map(mapSearchMerchant, dbModels))
+        return ShopSearchByCategory(id=merchantCategory.id, name=merchantCategory.name, shopSearchs=list_shop_search)
+    except Merchant.DoesNotExist:
+        return None

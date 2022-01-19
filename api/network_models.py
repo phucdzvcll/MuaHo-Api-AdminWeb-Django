@@ -1,4 +1,6 @@
+from calendar import c
 import datetime
+from this import d
 from typing import List, Optional
 
 class Banner():
@@ -189,6 +191,14 @@ class Category():
         self.name = name
         self.thumbUrl = thumb_url
 
+
+class ShopSearchByCategory():
+
+    def __init__(self, id: int, name: str, shopSearchs: List[ShopSearch]):
+        self.id = id
+        self.name = name
+        self.shopSearchs = shopSearchs
+
 class SignInNw():
     def __init__(self, jwt_token: str, user_name: str, refresh_token: str, email: str):  
         self.jwtToken = jwt_token
@@ -207,3 +217,11 @@ class UserNameResponse():
 class PhoneNumberResponse():
     def __init__(self, phone_number: str):  
         self.phoneNumber = phone_number
+
+class MaintenanceResponse():
+    def __init__(self, totalMinutes : int):
+        self.totalMinutes = totalMinutes
+        
+class CheckMantenanceResponse():
+    def __init__(self, maintenanceStatus : bool):
+        self.maintenanceStatus = maintenanceStatus

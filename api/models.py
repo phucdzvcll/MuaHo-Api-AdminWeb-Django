@@ -257,3 +257,8 @@ class Voucher(models.Model):
 class FirebaseBuyer(models.Model):
     uid = models.TextField(primary_key=True)
     buyer = models.OneToOneField(Buyer, on_delete=models.DO_NOTHING, db_constraint=False)
+
+class APIConfig(models.Model):
+    id = models.TextField(primary_key= True)
+    value = models.TextField()
+    status = models.BooleanField()
